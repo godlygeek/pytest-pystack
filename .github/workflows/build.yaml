@@ -70,17 +70,3 @@ jobs:
     - name: Test
       run: |
         make check
-
-  upload_pypi:
-    needs: [test]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'published'
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-
-      - uses: pypa/gh-action-pypi-publish@v1.8.11
-        with:
-          password: ${{ secrets.PYPI_PASSWORD }}
